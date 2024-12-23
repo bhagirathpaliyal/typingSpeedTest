@@ -19,17 +19,22 @@ const Text = () => {
 
   const [timeLeft, setTimeLeft] = useState(60);
 
-  const [index, setIndex] = useState(0);
-
-  const randomText = () => {
+  const reStart = () => {
     const randomNumber = Math.floor(Math.random() * paragraphs.length);
     setText(paragraphs[randomNumber]);
+    if(inputRef.current){
+      inputRef.current.focus();
+      setTypedText('')
+    inputRef.current.value='';
+    inputRef.current.disabled = false;
+    setTimeLeft(60);
     
-   
+    }
+    
   };
 
   useEffect(() => {
-    randomText();
+    reStart();
   }, []);
 
   const handleClick = () => {
@@ -37,13 +42,17 @@ const Text = () => {
       if (timeLeft > 0) {
         inputRef.current.disabled = false;
         inputRef.current.focus();
+        
+        
       } else {
-        randomText();
-        setTimeLeft(60);
-        setTypedText("");
-        inputRef.current.disabled = false;
-        inputRef.current.focus();
-        setIndex(0);
+        reStart();
+        // setTimeLeft(60);
+        // inputRef.current.value='';
+        // inputRef.current.disabled = false;
+        // inputRef.current.focus();
+        
+        
+        
       }
     }
 
@@ -58,7 +67,7 @@ const Text = () => {
       const timer = setInterval(() => {
         setTimeLeft((prev) => Math.max(prev - 1, 0));
       }, 1000);
-
+     
       return () => clearInterval(timer);
     }
   }, [textBlur]);
@@ -73,6 +82,10 @@ const Text = () => {
       setAccuracy(parseFloat(((correctChars / text.length) * 100).toFixed(2)));
       if (inputRef.current) {
         inputRef.current.disabled = true;
+      }
+    }else{
+      if (inputRef.current) {
+        inputRef.current.disabled = false;
       }
     }
   }, [timeLeft, textBlur]);
@@ -106,9 +119,9 @@ const Text = () => {
           <span
             key={i}
             className={`${
-              typedText[index] === char
+              typedText[i] === char
                 ? "text-green-500"
-                : typedText[index] === undefined
+                : typedText[i] === undefined
                 ? ""
                 : "text-red-500"
             }`}
@@ -118,16 +131,16 @@ const Text = () => {
         ))}
       </div>
       <button
-        onClick={() => randomText()}
+        onClick={() => reStart()}
         className="z-10 mt-[10px] rounded-[20px] border w-[50%] hover:bg-[#857171] duration-500 p-1"
       >
         Re-Start
       </button>
       <div className="flex justify-between  w-[50%] mt-2">
-        <div className="border w-full flex justify-center rounded-l-[20px] p-1">{wordsTyped}</div>
-        <div className="border w-full flex justify-center p-1">{correctChars}</div>
-        <div className="border w-full flex justify-center p-1">{accuracy}</div>
-        <div className="border w-full flex justify-center rounded-r-[20px] p-1">{timeLeft}s</div>
+        <div className="border w-full flex justify-center rounded-l-[20px] p-1">Words Typed: {wordsTyped}</div>
+        <div className="border w-full flex justify-center p-1">Correct Characters: {correctChars}</div>
+        <div className="border w-full flex justify-center p-1">Accuracy: {accuracy}%</div>
+        <div className="border w-full flex justify-center rounded-r-[20px] p-1">Time Left: {timeLeft}s</div>
       </div>
     
     </div>
