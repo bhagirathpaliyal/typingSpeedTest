@@ -39,20 +39,11 @@ const Text = () => {
 
   const handleClick = () => {
     if (inputRef.current) {
-      if (timeLeft > 0) {
-        inputRef.current.disabled = false;
+      inputRef.current.disabled = false;
+      if (timeLeft > 0) {       
         inputRef.current.focus();
-        
-        
       } else {
-        reStart();
-        // setTimeLeft(60);
-        // inputRef.current.value='';
-        // inputRef.current.disabled = false;
-        // inputRef.current.focus();
-        
-        
-        
+        reStart();      
       }
     }
 
