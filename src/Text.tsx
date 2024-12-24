@@ -27,7 +27,7 @@ const Text = () => {
       setTypedText('')
     inputRef.current.value='';
     inputRef.current.disabled = false;
-    setTimeLeft(60);
+    setTimeLeft(10);
     
     }
     
@@ -39,8 +39,9 @@ const Text = () => {
 
   const handleClick = () => {
     if (inputRef.current) {
+      inputRef.current.disabled = false;
       if (timeLeft > 0) {
-        inputRef.current.disabled = false;
+       
         inputRef.current.focus();
         
         
