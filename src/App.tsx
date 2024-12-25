@@ -1,6 +1,15 @@
 import { useEffect, useRef, useState } from "react";
+import { logPageView } from "./utils/analytics";
 
 const App = () => {
+    
+ 
+    useEffect(() => {
+        logPageView();
+    }, []);
+
+
+
   let paragraphs = [
     "In a world full of constant change, it's easy to feel lost in the shuffle. However, every experience, every encounter, and every challenge presents an opportunity for growth. Embrace each moment with open arms, for it's not the destination that defines us, but the journey itself",
     "Technology continues to advance at a rapid pace, shaping the way we live, work, and communicate. While there are countless benefits to these innovations, it's crucial to pause and reflect on how they impact our lives, our relationships, and our future. Striking a balance between progress and mindfulness is key to a prosperous tomorrow.",
@@ -33,9 +42,7 @@ const App = () => {
     
   };
 
-  // useEffect(() => {
-  //   reStart();
-  // }, []);
+ 
 
   const handleClick = () => {
     if (inputRef.current) {
