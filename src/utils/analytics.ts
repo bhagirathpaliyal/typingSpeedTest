@@ -1,6 +1,6 @@
 import ReactGA from 'react-ga4';
 
-const trackingId = import.meta.env.VITE_TRACKINGID; 
+const trackingId = 'G-T6MVG0CD7E'; 
 ReactGA.initialize(trackingId);
 
 export const logPageView = () => {
