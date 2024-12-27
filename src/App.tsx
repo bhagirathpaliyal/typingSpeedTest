@@ -1,77 +1,73 @@
 import { useEffect, useRef, useState } from "react";
 import { logPageView } from "./utils/analytics";
+import Header from "./components/Header";
+import TypingBox from "./components/TypingBox";
+import ProgressBar from "./components/ProgressBar";
+import Stats from "./components/Stats";
+import RestartButton from "./components/RestartButton";
 
 const App = () => {
-    
- 
-    useEffect(() => {
-        logPageView();
-    }, []);
-
-
-
-  let paragraphs = [
-    "In a world full of constant change, it's easy to feel lost in the shuffle. However, every experience, every encounter, and every challenge presents an opportunity for growth. Embrace each moment with open arms, for it's not the destination that defines us, but the journey itself",
-    "Technology continues to advance at a rapid pace, shaping the way we live, work, and communicate. While there are countless benefits to these innovations, it's crucial to pause and reflect on how they impact our lives, our relationships, and our future. Striking a balance between progress and mindfulness is key to a prosperous tomorrow.",
-    "The beauty of nature is often found in its simplicity. From the rustling leaves to the flowing streams, nature reminds us of the importance of slowing down and appreciating the little things. In a fast-paced world, it's essential to reconnect with the natural world and find peace in its rhythms.",
-    "Life is a series of choices, each one leading us down a different path. Some decisions are easy, others more difficult, but each one shapes our journey in profound ways. The key to a fulfilling life lies in making choices that align with our values, passions, and purpose, no matter how challenging they may seem.",
-    "Success is often seen as the end goal, but it’s the lessons learned along the way that truly define us. Failure, setbacks, and unexpected obstacles are not roadblocks but stepping stones toward achieving our dreams. Each experience is a valuable teacher, guiding us toward the person we are meant to become.",
+  const paragraphs = [
+    "The sun rises in the east and fills the world with light and warmth. Each morning the sky glows with beautiful colors and birds sing their cheerful songs. People wake up and start their day full of energy and hope. The flowers bloom and trees sway gently in the breeze. Nature reminds us to keep going and embrace the changes around us. Every sunrise brings new opportunities to grow and explore. Life is a journey where every step matters and every moment is precious.",
+    "Fruits are nature's gifts to us filled with vitamins and nutrients that keep our bodies healthy. Apples are sweet and crunchy. Bananas are soft and easy to eat. Oranges are juicy and full of flavor. Eating fruits every day gives us energy and helps us stay strong. They are not only delicious but also colorful and fun to eat. Whether it is a ripe mango a slice of watermelon or a handful of berries fruits bring joy and nutrition to our lives.",
+   "The sky is blue and stretches endlessly above us. On a clear day it feels like an open invitation to step outside and enjoy the fresh air. Parks become alive with laughter as children run and play. Families gather on the grass sharing food and stories. Friends fly kites while the gentle breeze carries the scent of blooming flowers. Being in nature reminds us to slow down and appreciate the little things in life. Moments like these are what create lasting memories.",
+   "Cats are curious creatures with soft fur and bright eyes. They move quietly and gracefully exploring their surroundings with endless curiosity. They love to chase after strings jump onto high places and hide in cozy spots. Even though they seem independent cats form strong bonds with their owners. They show their love by purring softly and rubbing against your legs. Their playful nature and gentle behavior make them wonderful companions bringing joy to every home they enter.",
+   "Water is essential for all living beings on Earth. It flows in rivers and streams fills lakes and oceans and supports life everywhere. We use water for drinking cooking cleaning and growing food. It keeps us healthy and strong and it is important to protect this valuable resource. Many people in the world do not have enough clean water to drink and it is up to us to save water and prevent pollution. Every small action we take helps to preserve water for the future."
   ];
 
   const [text, setText] = useState<string>("");
-
   const [textBlur, setTextBlur] = useState(true);
-
   const inputRef = useRef<HTMLInputElement>(null);
-
   const [typedText, setTypedText] = useState("");
-
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState<number>(60);
+  const [wordsTyped, setWordsTyped] = useState<number>(0);
+  const [correctChars, setCorrectChars] = useState<number>(0);
+  const [accuracy, setAccuracy] = useState(0);
 
   const reStart = () => {
     const randomNumber = Math.floor(Math.random() * paragraphs.length);
     setText(paragraphs[randomNumber]);
-    if(inputRef.current){
+    if (inputRef.current) {
       inputRef.current.focus();
-      setTypedText('')
-    inputRef.current.value='';
-    inputRef.current.disabled = false;
-    setTimeLeft(60);
-    
+      setTypedText("");
+      inputRef.current.value = "";
+      inputRef.current.disabled = false;
+      setTimeLeft(60);
+     
     }
-    
   };
-
- 
 
   const handleClick = () => {
     if (inputRef.current) {
       inputRef.current.disabled = false;
-      if (timeLeft > 0) {       
+      if (timeLeft > 0) {
         inputRef.current.focus();
+        
       } else {
-        reStart();      
+        reStart();
+       
+        
       }
     }
-
     setTextBlur(false);
   };
-  const [wordsTyped, setWordsTyped] = useState(0);
-  const [correctChars, setCorrectChars] = useState(0);
-  const [accuracy, setAccuracy] = useState(0);
+
+  useEffect(() => {
+    logPageView();
+    reStart();
+  }, []);
 
   useEffect(() => {
     if (!textBlur) {
       const timer = setInterval(() => {
         setTimeLeft((prev) => Math.max(prev - 1, 0));
       }, 1000);
-     
       return () => clearInterval(timer);
     }
   }, [textBlur]);
 
   useEffect(() => {
-    if (timeLeft == 0) {
+    if (timeLeft === 0) {
       setTextBlur(true);
       setWordsTyped(typedText.split(" ").length);
       setCorrectChars(
@@ -81,101 +77,29 @@ const App = () => {
       if (inputRef.current) {
         inputRef.current.disabled = true;
       }
-    }else{
-      if (inputRef.current) {
-        inputRef.current.disabled = false;
-      }
     }
-  }, [timeLeft, textBlur]);
+  }, [timeLeft]);
 
-
-  useEffect(() => {
-    if(textBlur ){
-      if (inputRef.current) {
-           inputRef.current.disabled = true;
-      }
-   
-    }
-    reStart();
-    
-  }, [])
-  
   return (
     <div className="flex flex-col items-center p-4 min-h-screen bg-gradient-to-r from-[#FFFFFF] via-[#F5F5F5] to-[#D6D6D6] text-[#000]">
-    <h1 className="text-3xl text-[#B0B0B0] font-bold mb-4 animate-fadeIn">Typing Speed Test</h1>
-    
-    <input
-      type="text"
-      ref={inputRef}
-      placeholder="Start typing..."
-      className="opacity-0"
-      value={typedText}
-      onChange={(e) => setTypedText(e.target.value)}
-    />
-
-
-    <div
-      className={`bg-white text-black rounded-lg shadow-lg p-4 w-full md:w-2/3 text-xl leading-7 mt-6`}
-      onClick={handleClick}
-    >
-      <div>
-      {text.split("").map((char, i) => (
-        <span
-          key={i}
-          className={`transition-all duration-200 ${
-        textBlur ? "blur-[4px]" : "blur-none"
-      } ${
-            typedText[i] === char
-              ? "text-green-600"
-              : typedText[i] === undefined
-              ? "text-gray-500"
-              : "text-red-600"
-          }`}
-        >
-          {char}
-        </span>
-      ))}
-      </div>
-    
+      <Header />
+      <TypingBox
+        text={text}
+        textBlur={textBlur}
+        typedText={typedText}
+        setTypedText={setTypedText}
+        inputRef={inputRef}
+        handleClick={handleClick}
+      />
+      <ProgressBar timeLeft={timeLeft} />
+      <RestartButton reStart={reStart} />
+      <Stats
+        wordsTyped={wordsTyped}
+        correctChars={correctChars}
+        accuracy={accuracy}
+        timeLeft={timeLeft}
+      />
     </div>
-
-
-    <div className="w-full md:w-2/3 mt-4">
-      <div className="bg-gray-300 h-2 rounded-full overflow-hidden">
-        <div
-          className="bg-[#B0B0B0] h-full"
-          style={{ width: `${(timeLeft / 60) * 100}%` }}
-        />
-      </div>
-      <p className="text-center mt-2">Progress</p>
-    </div>
-
-    <button
-      onClick={reStart}
-      className="mt-4 px-6 py-2 rounded-full bg-[#B0B0B0] hover:bg-[#8d8c8c] text-white font-semibold transition duration-300"
-    >
-      Restart
-    </button>
-    
-
-    <div className="flex flex-wrap-reverse gap-[2px] justify-center mt-6 w-full md:w-2/3 space-y-2 md:space-y-0">
-      <div className="w-full md:w-1/4 flex justify-center items-center p-2 border rounded-lg">
-        Words Typed: {wordsTyped}
-      </div>
-      <div className="w-full md:w-1/4 flex justify-center items-center p-2 border rounded-lg">
-        Correct Characters: {correctChars}
-      </div>
-      <div className="w-full md:w-1/4 flex justify-center items-center p-2 border rounded-lg">
-        Accuracy: {accuracy}%
-      </div>
-      <div className="w-full md:w-1/4 flex justify-center items-center p-2 border rounded-lg">
-        Time Left: {timeLeft}s
-      </div>
-    </div>
-
-   
-  </div>
-
   );
 };
 
