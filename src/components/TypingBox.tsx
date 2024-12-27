@@ -19,7 +19,8 @@ const TypingBox :React.FC<TypingBoxProps> = ({ text, textBlur, typedText, setTyp
       onChange={(e) => setTypedText(e.target.value)}
     />
     <div
-      className={`bg-white text-black rounded-lg shadow-lg p-4 w-full md:w-2/3 text-xl leading-7 mt-6`}
+      className={`bg-gradient-to-r from-[#FFFFFF] via-[#F5F5F5] to-[#D6D6D6]
+          dark:from-[#1E1E1E] dark:via-[#2E2E2E] dark:to-[#3E3E3E] text-black rounded-lg shadow-lg p-4 w-full md:w-2/3 text-xl leading-7 mt-6`}
       onClick={handleClick}
     >
       <div>

@@ -81,7 +81,7 @@ const App = () => {
   }, [timeLeft]);
 
   return (
-    <div className="flex flex-col items-center p-4 min-h-screen bg-gradient-to-r from-[#FFFFFF] via-[#F5F5F5] to-[#D6D6D6] text-[#000]">
+    <div className="flex flex-col items-center p-4 min-h-screen bg-gradient-to-r from-[#FFFFFF] via-[#F5F5F5] to-[#D6D6D6]  dark:from-[#1E1E1E] dark:via-[#2E2E2E] dark:to-[#3E3E3E]  text-[#000]">
       <Header />
       <TypingBox
         text={text}
