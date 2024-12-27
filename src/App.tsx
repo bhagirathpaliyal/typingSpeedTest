@@ -5,6 +5,7 @@ import TypingBox from "./components/TypingBox";
 import ProgressBar from "./components/ProgressBar";
 import Stats from "./components/Stats";
 import RestartButton from "./components/RestartButton";
+import Footer from "./components/Footer";
 
 const App = () => {
   const paragraphs = [
@@ -99,6 +100,7 @@ const App = () => {
         accuracy={accuracy}
         timeLeft={timeLeft}
       />
+      <Footer/>
     </div>
   );
 };
