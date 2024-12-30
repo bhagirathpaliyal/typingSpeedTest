@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { logPageView } from "./utils/analytics";
 import Header from "./components/Header";
 import TypingBox from "./components/TypingBox";
-import ProgressBar from "./components/ProgressBar";
+// import ProgressBar from "./components/ProgressBar";
 import Stats from "./components/Stats";
 import RestartButton from "./components/RestartButton";
 import Footer from "./components/Footer";
@@ -33,7 +33,7 @@ const App = () => {
       setTypedText("");
       inputRef.current.value = "";
       inputRef.current.disabled = false;
-      setTimeLeft(60);
+      setTimeLeft(10);
      
     }
   };
@@ -66,33 +66,36 @@ const App = () => {
       return () => clearInterval(timer);
     }
   }, [textBlur]);
+  
+  const temp=typedText.split("").filter((char, i) => char === text[i]).length
+
 
   useEffect(() => {
     if (timeLeft === 0) {
       setTextBlur(true);
       setWordsTyped(typedText.split(" ").length);
-      setCorrectChars(
-        typedText.split("").filter((char, i) => char === text[i]).length
-      );
-      setAccuracy(parseFloat(((correctChars / text.length) * 100).toFixed(2)));
+      setCorrectChars(temp);
+      setAccuracy(parseFloat(((temp / text.length) * 100).toFixed(2)));
       if (inputRef.current) {
         inputRef.current.disabled = true;
       }
     }
-  }, [timeLeft]);
+  }, [timeLeft,typedText]);
 
   return (
-    <div className="flex flex-col items-center p-4 min-h-screen bg-gradient-to-r from-[#FFFFFF] via-[#F5F5F5] to-[#D6D6D6]  dark:from-[#1E1E1E] dark:via-[#2E2E2E] dark:to-[#3E3E3E]  text-[#000]">
+    <div className="flex flex-col items-center justify-center p-4 min-h-screen bg-gradient-to-r from-[#FFFFFF] via-[#F5F5F5] to-[#D6D6D6]  dark:from-[#1E1E1E] dark:via-[#2E2E2E] dark:to-[#3E3E3E]  text-[#000]">
       <Header />
+      <div className="flex flex-col items-center flex-1">
       <TypingBox
         text={text}
         textBlur={textBlur}
+        
         typedText={typedText}
         setTypedText={setTypedText}
         inputRef={inputRef}
         handleClick={handleClick}
       />
-      <ProgressBar timeLeft={timeLeft} />
+   
       <RestartButton reStart={reStart} />
       <Stats
         wordsTyped={wordsTyped}
@@ -100,6 +103,8 @@ const App = () => {
         accuracy={accuracy}
         timeLeft={timeLeft}
       />
+      </div>
+      
       <Footer/>
     </div>
   );

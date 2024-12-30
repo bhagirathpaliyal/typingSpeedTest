@@ -1,9 +1,11 @@
-// Footer component in React
+
 
 const Footer = () => {
+ 
+   
     return (
-      <footer className=" fixed bottom-0 py-4 mt-8 w-[90%]">
-        <div className="w-[100%] mx-auto px-6 flex justify-around items-center">
+      <footer className=" py-4 mt-8 w-[90%]">
+        <div className="w-[100%] mx-auto px-6 flex justify-around items-center flex-wrap">
          
           <div className="flex space-x-6">
             <a href="https://github.com/bhagirathpaliyal" target="_blank" rel="noopener noreferrer" className=" text-[#B0B0B0] hover:text-gray-400">
@@ -15,6 +17,8 @@ const Footer = () => {
             <a href="https://twitter.com/b_paliyal" target="_blank" rel="noopener noreferrer" className="text-[#B0B0B0] hover:text-gray-400">
               Twitter
             </a>
+
+           
             
           </div>
   

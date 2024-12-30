@@ -1,4 +1,4 @@
-import React, { RefObject } from "react";
+import React, { RefObject, useState } from "react";
 interface TypingBoxProps {
     text: string;
     textBlur: boolean;
@@ -8,19 +8,28 @@ interface TypingBoxProps {
     handleClick: () => void;
   }
 
-const TypingBox :React.FC<TypingBoxProps> = ({ text, textBlur, typedText, setTypedText, inputRef, handleClick }) => (
+const TypingBox :React.FC<TypingBoxProps> = ({ text, textBlur, typedText, setTypedText, inputRef, handleClick }) =>{ 
+ 
+  
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if(event.key=='Enter') {
+      handleClick()
+    }
+  };
+  return (
   <>
     <input
       type="text"
+      onKeyDown={handleKeyPress}
       ref={inputRef}
-      placeholder="Start typing..."
+      
       className="opacity-0"
       value={typedText}
       onChange={(e) => setTypedText(e.target.value)}
     />
     <div
-      className={`bg-gradient-to-r from-[#FFFFFF] via-[#F5F5F5] to-[#D6D6D6]
-          dark:from-[#1E1E1E] dark:via-[#2E2E2E] dark:to-[#3E3E3E] text-black rounded-lg shadow-lg p-4 w-full md:w-2/3 text-xl leading-7 mt-6`}
+      className={`hover:bg-gradient-to-r from-[#FFFFFF] via-[#F5F5F5] to-[#D6D6D6]
+          hover:dark:from-[#1E1E1E] dark:via-[#2E2E2E] dark:to-[#3E3E3E] text-black rounded-lg p-4 w-full md:w-2/3 text-xl leading-7 mt-6`}
       onClick={handleClick}
     >
       <div>
@@ -43,6 +52,6 @@ const TypingBox :React.FC<TypingBoxProps> = ({ text, textBlur, typedText, setTyp
       </div>
     </div>
   </>
-);
+)};
 
 export default TypingBox;

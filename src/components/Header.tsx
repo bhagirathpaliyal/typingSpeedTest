@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { MoonIcon,SunIcon } from "@heroicons/react/16/solid";
 
 const Header = () => {
 
@@ -14,15 +15,17 @@ const Header = () => {
 
       <button
           onClick={toggleDarkMode}
-          className="  px-5 py-2 rounded-lg 
-          bg-gradient-to-r from-[#FFFFFF] via-[#F5F5F5] to-[#D6D6D6]
-          dark:from-[#1E1E1E] dark:via-[#2E2E2E] dark:to-[#3E3E3E]
-          shadow-inner
-          text-gray-800 dark:text-gray-200
-          hover:shadow-md
-          transition-all"
+          className="  px-4 py-1 rounded-full
+          hover:bg-gradient-to-r from-[#FFFFFF] via-[#F5F5F5] to-[#D6D6D6]
+          hover:dark:from-[#1E1E1E] dark:via-[#2E2E2E] dark:to-[#3E3E3E]
+          hover:shadow-inner
+         "
         >
-          {darkMode ? 'Light Mode' : 'Dark Mode'}
+           {darkMode ? (
+        <SunIcon className="h-6 w-6 text-[#fff]" />
+      ) : (
+        <MoonIcon className="h-6 w-6 text-[#000]" />
+      )}
         </button>
     </div>
 )};
