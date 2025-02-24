@@ -43,9 +43,7 @@ const TypingBox: React.FC<TypingBoxProps> = ({
       />
 
       <div
-        className="hover:bg-gradient-to-r from-white via-gray-200 to-gray-300 
-          hover:dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 
-          text-black rounded-lg p-4 w-full md:w-2/3 text-xl leading-7 mt-6 cursor-pointer"
+        className="text-black rounded-lg p-4 w-full md:w-2/3 text-xl leading-7 mt-6 cursor-pointer"
         onClick={handleClick}
       >
         <div>
