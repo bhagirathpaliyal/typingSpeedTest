@@ -1,5 +1,5 @@
 import React, { RefObject, useRef } from "react";
-import clickSound from "../assets/typingSoundEffect.mp3"; // Import your sound file
+import clickSound from "../assets/typingSoundEffect.mp3";
 
 interface TypingBoxProps {
   text: string;
@@ -18,21 +18,21 @@ const TypingBox: React.FC<TypingBoxProps> = ({
   inputRef,
   handleClick,
 }) => {
-  const soundRef = useRef(new Audio(clickSound)); 
+  const soundRef = useRef(new Audio(clickSound));
 
- 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleClick();
     } else {
-      soundRef.current.currentTime = 0; 
-      soundRef.current.play().catch((err) => console.error("Sound Error:", err));
+      soundRef.current.currentTime = 0;
+      soundRef.current
+        .play()
+        .catch((err) => console.error("Sound Error:", err));
     }
   };
 
   return (
     <>
-     
       <input
         type="text"
         onKeyDown={handleKeyPress}
@@ -42,7 +42,6 @@ const TypingBox: React.FC<TypingBoxProps> = ({
         onChange={(e) => setTypedText(e.target.value)}
       />
 
-    
       <div
         className="hover:bg-gradient-to-r from-white via-gray-200 to-gray-300 
           hover:dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 
