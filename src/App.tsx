@@ -6,8 +6,8 @@ import TypingBox from "./components/TypingBox";
 import Stats from "./components/Stats";
 import RestartButton from "./components/RestartButton";
 import Footer from "./components/Footer";
-import LeaderBoard from "./LeaderBoard";
-
+import LeaderBoard from "./components/LeaderBoard";
+import { db, collection, addDoc, getDocs, query, orderBy } from "./firebaseConfig";
 const App = () => {
   const paragraphs = [
     "the sun rises in the east and fills the world with light and warmth each morning the sky glows with beautiful colors and birds sing their cheerful songs people wake up and start their day full of energy and hope the flowers bloom and trees sway gently in the breeze nature reminds us to keep going and embrace the changes around us every sunrise brings new opportunities to grow and explore life is a journey where every step matters and every moment is precious",
@@ -96,34 +96,50 @@ const App = () => {
     }
   };
 
-  const addScoreToLeaderboard = (name: string, score: number) => {
-    const newLeaderboard = [...leaderboard, { name, score }];
+  
 
-    newLeaderboard.sort((a, b) => b.score - a.score);
+const addScoreToLeaderboard = async (name: string, score: number) => {
+  try {
+    await addDoc(collection(db, "leaderboard"), {
+      name,
+      score,
+      timestamp: new Date(),
+    });
+    fetchLeaderboard(); 
+  } catch (error) {
+    console.error("Error adding score:", error);
+  }
+};
 
-    const updatedLeaderboard = newLeaderboard.slice(0, 10);
+const fetchLeaderboard = async () => {
+  const leaderboardRef = collection(db, "leaderboard");
+  const q = query(leaderboardRef, orderBy("score", "desc"));
+  const querySnapshot = await getDocs(q);
 
-    setLeaderboard(updatedLeaderboard);
-    localStorage.setItem("leaderboard", JSON.stringify(updatedLeaderboard));
-  };
+  const leaderboardData = querySnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...(doc.data() as { name: string; score: number }) 
+  }));
 
-  useEffect(() => {
-    const savedLeaderboard = JSON.parse(
-      localStorage.getItem("leaderboard") || "[]"
-    );
-    setLeaderboard(savedLeaderboard);
-  }, []);
+  setLeaderboard(leaderboardData);
+};
+
+
+useEffect(() => {
+  fetchLeaderboard();
+}, []);
+
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-[#FFFFFF] via-[#F5F5F5] to-[#D6D6D6]  dark:from-[#1E1E1E] dark:via-[#2E2E2E] dark:to-[#3E3E3E] text-gray-900 dark:text-gray-100">
       <Header />
 
-      <div className="flex w-full px-6 gap-6">
-        <div className="w-1/3 bg-white/20 dark:bg-black/30 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-gray-300 dark:border-gray-700">
+      <div className="flex flex-wrap-reverse w-full px-6 gap-6">
+        <div className="w-1/3 bg-white/20 dark:bg-black/30 backdrop-blur-md p-4 rounded-2xl shadow-lg max-sm:w-full">
           <LeaderBoard leaderboard={leaderboard} />
         </div>
 
-        <div className="flex flex-col items-center flex-1 space-y-6 p-6 bg-white/20 dark:bg-gray-900 rounded-2xl shadow-lg">
+        <div className="flex flex-col items-center flex-1 space-y-6 p-6 bg-white/20 dark:bg-black/30 rounded-2xl shadow-lg">
           <TypingBox
             text={text}
             textBlur={textBlur}

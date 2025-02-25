@@ -10,15 +10,12 @@ const Header = () => {
     document.documentElement.classList.toggle('dark', !darkMode);
   };
     return(
-    <div className=" flex justify-between w-[90%]">
-      <h1 className="text-3xl text-[#B0B0B0]  font-bold mb-4 animate-fadeIn">Typing Speed Test</h1>
+    <div className=" flex items-center justify-between h-full w-[96%] border-b mb-[10px] pb-2">
+      <h1 className="text-[24px] max-sm:text-[20px] text-[#B0B0B0]  font-bold">Typing Speed Test</h1>
 
       <button
           onClick={toggleDarkMode}
-          className="  px-4 py-1 rounded-full
-          hover:bg-gradient-to-r from-[#FFFFFF] via-[#F5F5F5] to-[#D6D6D6]
-          hover:dark:from-[#1E1E1E] dark:via-[#2E2E2E] dark:to-[#3E3E3E]
-          hover:shadow-inner
+          className="  px-2 py-2 rounded-full
          "
         >
            {darkMode ? (
