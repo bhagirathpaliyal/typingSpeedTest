@@ -1,8 +1,5 @@
-import React from 'react'
 
-// type LeaderBoardProps = {
-//     leaderboard: { name: string; score: number }[];
-//   };
+
   const LeaderBoard = ({ leaderboard }: { leaderboard: { name: string; score: number }[] }) => {
 
     return (
