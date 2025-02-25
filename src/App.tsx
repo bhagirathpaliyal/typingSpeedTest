@@ -112,17 +112,28 @@ const addScoreToLeaderboard = async (name: string, score: number) => {
 };
 
 const fetchLeaderboard = async () => {
-  const leaderboardRef = collection(db, "leaderboard");
-  const q = query(leaderboardRef, orderBy("score", "desc"));
-  const querySnapshot = await getDocs(q);
+  try {
+    const leaderboardRef = collection(db, "leaderboard");
+    const q = query(leaderboardRef, orderBy("score", "desc"));
+    const querySnapshot = await getDocs(q);
 
-  const leaderboardData = querySnapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...(doc.data() as { name: string; score: number }) 
-  }));
+    if (querySnapshot.empty) {
+      console.warn("No leaderboard data found");
+      setLeaderboard([]);
+      return;
+    }
 
-  setLeaderboard(leaderboardData);
+    const leaderboardData = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...(doc.data() as { name: string; score: number })
+    }));
+
+    setLeaderboard(leaderboardData);
+  } catch (error) {
+    console.error("Error fetching leaderboard:", error);
+  }
 };
+
 
 
 useEffect(() => {
