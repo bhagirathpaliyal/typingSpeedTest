@@ -8,6 +8,7 @@ import RestartButton from "./components/RestartButton";
 import Footer from "./components/Footer";
 import LeaderBoard from "./components/LeaderBoard";
 import { db, collection, addDoc, getDocs, query, orderBy } from "./firebaseConfig";
+import ShareResult from "./components/ShareResult";
 const App = () => {
   const paragraphs = [
     "the sun rises in the east and fills the world with light and warmth each morning the sky glows with beautiful colors and birds sing their cheerful songs people wake up and start their day full of energy and hope the flowers bloom and trees sway gently in the breeze nature reminds us to keep going and embrace the changes around us every sunrise brings new opportunities to grow and explore life is a journey where every step matters and every moment is precious",
@@ -82,12 +83,14 @@ const App = () => {
       setCorrectChars(temp);
       setAccuracy(parseFloat(((temp / text.length) * 100).toFixed(2)));
       setTimeDropDownVisible(true);
-      handleTypingTestEnd(wordsTyped);
+      
       if (inputRef.current) {
         inputRef.current.disabled = true;
       }
+      handleTypingTestEnd(wordsTyped);
     }
   }, [timeLeft, typedText]);
+  
 
   const handleTypingTestEnd = (wpm: number) => {
     const userName = prompt("Enter your name for the leaderboard:");
@@ -141,11 +144,14 @@ useEffect(() => {
 }, []);
 
 
+
+
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-[#FFFFFF] via-[#F5F5F5] to-[#D6D6D6]  dark:from-[#1E1E1E] dark:via-[#2E2E2E] dark:to-[#3E3E3E] text-gray-900 dark:text-gray-100">
       <Header />
 
-      <div className="flex flex-wrap-reverse w-full px-6 gap-6">
+      <div className="flex flex-wrap-reverse w-[90%]  gap-6">
         <div className="w-1/3 bg-white/20 dark:bg-black/30 backdrop-blur-md p-4 rounded-2xl shadow-lg max-sm:w-full">
           <LeaderBoard leaderboard={leaderboard} />
         </div>
@@ -173,6 +179,11 @@ useEffect(() => {
           />
         </div>
       </div>
+    
+      <ShareResult wpm={wordsTyped} accuracy={accuracy} />
+     
+      
+
 
       <Footer />
     </div>

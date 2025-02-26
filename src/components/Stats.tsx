@@ -1,4 +1,3 @@
-// import { FormControl, InputLabel, NativeSelect } from "@mui/material";
 import { FormControl, Select, MenuItem, SelectChangeEvent } from "@mui/material";
 import React, { Dispatch, SetStateAction } from "react";
 
@@ -29,7 +28,7 @@ const Stats: React.FC<StatsProps> = ({
   };
 
   return (
-    <div className="flex flex-wrap-reverse gap-[2px] justify-center mt-6 w-full md:w-2/3 space-y-2 md:space-y-0 dark:text-[#fff] text-[#000]">
+    <div  className="flex flex-wrap-reverse gap-[2px] justify-center mt-6 w-full md:w-2/3 space-y-2 md:space-y-0 dark:text-[#fff] text-[#000]">
       <div className="w-full md:w-1/4 flex justify-center items-center p-2 border-2 dark:border rounded-lg text-[#B0B0B0] font-medium">
         WPM: {wordsTyped}
       </div>
@@ -49,7 +48,7 @@ const Stats: React.FC<StatsProps> = ({
             variant="outlined"
             displayEmpty
             sx={{
-              backgroundColor: "none ", // Primary blue color
+              backgroundColor: "none ", 
               color: "#B0B0B0",
               borderRadius: "8px",
               fontWeight: "medium",
