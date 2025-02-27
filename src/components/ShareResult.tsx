@@ -47,7 +47,7 @@ const ShareResult: React.FC<ShareResultProps> = ({ wpm, accuracy }) => {
       setTimeout(() => setCopied(false), 2000);
     });
   };
-console.log(wpm)
+
   return (
     <div className={`flex flex-col w-[90%] ${wpm==0?'hidden':'block'} bg-white/20 dark:bg-black/30 backdrop-blur-md p-4 rounded-2xl shadow-lg mt-4`}>
         <div>
