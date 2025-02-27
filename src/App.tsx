@@ -23,6 +23,7 @@ const App = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [typedText, setTypedText] = useState("");
   const [timeLeft, setTimeLeft] = useState<number>(60);
+  const [selectTime, setSelectTime] = useState<number>(60);
   const [wordsTyped, setWordsTyped] = useState<number>(0);
   const [correctChars, setCorrectChars] = useState<number>(0);
   const [accuracy, setAccuracy] = useState(0);
@@ -39,7 +40,7 @@ const App = () => {
       setTypedText("");
       inputRef.current.value = "";
       inputRef.current.disabled = false;
-      setTimeLeft(30);
+      setTimeLeft(selectTime);
       setTextBlur(false);
     }
     setTimeDropDownVisible(false);
@@ -51,6 +52,7 @@ const App = () => {
       if (timeLeft > 0) {
         inputRef.current.focus();
         setTimeDropDownVisible(false);
+        setTimeLeft(selectTime);
       } else {
         reStart();
         
@@ -87,7 +89,8 @@ const App = () => {
       if (inputRef.current) {
         inputRef.current.disabled = true;
       }
-      handleTypingTestEnd(wordsTyped);
+      handleTypingTestEnd(typedText.split(" ").length);
+      
     }
   }, [timeLeft, typedText]);
   
@@ -173,9 +176,8 @@ useEffect(() => {
             correctChars={correctChars}
             accuracy={accuracy}
             timeLeft={timeLeft}
-            setTimeLeft={setTimeLeft}
+            setSelectTime={setSelectTime}
             timeDropDownVisible={timeDropDownVisible}
-            setTimeDropDownVisible={setTimeDropDownVisible}
           />
         </div>
       </div>

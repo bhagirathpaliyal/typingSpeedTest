@@ -6,9 +6,8 @@ interface StatsProps {
   correctChars: number;
   accuracy: number;
   timeLeft: number;
-  setTimeLeft: Dispatch<SetStateAction<number>>;
+  setSelectTime: Dispatch<SetStateAction<number>>;
   timeDropDownVisible: boolean;
-  setTimeDropDownVisible: Dispatch<SetStateAction<boolean>>;
 }
 
 const Stats: React.FC<StatsProps> = ({
@@ -16,15 +15,13 @@ const Stats: React.FC<StatsProps> = ({
   correctChars,
   accuracy,
   timeLeft,
-  setTimeLeft,
+  setSelectTime,
   timeDropDownVisible,
-  setTimeDropDownVisible,
 }) => {
 
   const handleTimeChange = (event: SelectChangeEvent<number>) => {
     const selectedTime = Number(event.target.value);
-    setTimeLeft(selectedTime);
-    setTimeDropDownVisible(false); 
+    setSelectTime(selectedTime);
   };
 
   return (
@@ -43,7 +40,7 @@ const Stats: React.FC<StatsProps> = ({
 
         <FormControl fullWidth>
           <Select
-            defaultValue={30}
+            defaultValue={60}
             onChange={handleTimeChange}
             variant="outlined"
             displayEmpty
