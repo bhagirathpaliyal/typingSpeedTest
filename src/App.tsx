@@ -16,6 +16,7 @@ import {
   orderBy,
 } from "./firebaseConfig";
 import ShareResult from "./components/ShareResult";
+import ProgressBar from "./components/ProgressBar";
 
 const paragraphs = [
   "the sun rises in the east and fills the world with light and warmth each morning the sky glows with beautiful colors and birds sing their cheerful songs people wake up and start their day full of energy and hope the flowers bloom and trees sway gently in the breeze nature reminds us to keep going and embrace the changes around us every sunrise brings new opportunities to grow and explore life is a journey where every step matters and every moment is precious",
@@ -176,7 +177,7 @@ const App = () => {
           <LeaderBoard leaderboard={leaderboard} />
         </div>
 
-        <div className="flex flex-col items-center flex-1 space-y-6 p-6 bg-white/20 dark:bg-black/30 rounded-2xl shadow-lg">
+        <div className="flex flex-col items-center flex-1 gap-4 p-2 bg-white/20 dark:bg-black/30 rounded-2xl shadow-lg">
           <div className={`flex gap-4 ${textBlur ? "block" : "hidden"}`}>
             <button
               className={`px-4 py-2 rounded-md ${
@@ -195,7 +196,7 @@ const App = () => {
               Hard
             </button>
           </div>
-
+          <ProgressBar timeLeft={timeLeft} selectTime={selectTime}/>
           <TypingBox
             text={text}
             textBlur={textBlur}
@@ -203,6 +204,9 @@ const App = () => {
             setTypedText={setTypedText}
             inputRef={inputRef}
             handleClick={handleClick}
+            timeLeft={timeLeft}
+            setSelectTime={setSelectTime}
+            timeDropDownVisible={timeDropDownVisible}
           />
 
           <RestartButton reStart={reStart} />
@@ -211,9 +215,6 @@ const App = () => {
             wordsTyped={wordsTyped}
             correctChars={correctChars}
             accuracy={accuracy}
-            timeLeft={timeLeft}
-            setSelectTime={setSelectTime}
-            timeDropDownVisible={timeDropDownVisible}
           />
         </div>
       </div>
