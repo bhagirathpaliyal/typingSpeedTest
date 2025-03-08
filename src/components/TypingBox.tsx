@@ -1,7 +1,6 @@
 import React, { Dispatch, RefObject, SetStateAction, useRef } from "react";
 import clickSound from "../assets/typingSoundEffect.mp3";
 import { FormControl, Select, MenuItem, SelectChangeEvent } from "@mui/material";
-import ProgressBar from "./ProgressBar";
 
 interface TypingBoxProps {
   text: string;
