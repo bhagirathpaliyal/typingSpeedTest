@@ -1,5 +1,8 @@
 import html2canvas from "html2canvas";
 import { useState } from "react";
+import { Button } from "@/components/ui/button"
+import { Aperture ,Twitter,Copy} from 'lucide-react';
+
 
 type ShareResultProps={
     wpm: number;
@@ -63,41 +66,45 @@ const ShareResult: React.FC<ShareResultProps> = ({ wpm, accuracy }) => {
     </div>
     <div className="flex max-sm:flex-wrap gap-4 mt-4">
       
-      <button
+      <Button
         onClick={handleCopy}
-        className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+        
       >
-        {copied ? "Copied!" : "Copy Result"}
-      </button>
+        {copied ? "Copied!" : <Copy/>}
+      </Button>
 
-      <button
+      <Button
         onClick={handleScreenshot}
-        className="bg-gray-500 text-white px-4 py-2 rounded-lg"
-      >
-        Capture Screenshot
-      </button>
-
       
+      >
+        <Aperture/>
+        Capture Screenshot
+      </Button>
+
+      <Button>
       <a
         href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-green-500 text-white px-4 py-2 rounded-lg"
       >
         Share on WhatsApp
       </a>
+      </Button>
 
-      
+      <Button>
       <a
         href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
           shareText
         )}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-blue-400 text-white px-4 py-2 rounded-lg"
+        className="flex items-center gap-[4px]"
+       
       >
+        <Twitter/>
         Share on Twitter
       </a>
+      </Button>
       
     </div>
   </div>);
