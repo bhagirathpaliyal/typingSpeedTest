@@ -1,6 +1,19 @@
 import React, { Dispatch, RefObject, SetStateAction, useRef } from "react";
 import clickSound from "../assets/typingSoundEffect.mp3";
-import { FormControl, Select, MenuItem, SelectChangeEvent } from "@mui/material";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Progress } from "@/components/ui/progress"
+import { Button } from "@/components/ui/button"
+// import {
+//   ToggleGroup,
+//   ToggleGroupItem,
+// } from "@/components/ui/toggle-group"
+
 
 interface TypingBoxProps {
   text: string;
@@ -11,7 +24,10 @@ interface TypingBoxProps {
   handleClick: () => void;
   timeLeft: number;
     setSelectTime: Dispatch<SetStateAction<number>>;
+    selectTime: number;
     timeDropDownVisible: boolean;
+    setDifficulty:Dispatch<SetStateAction<string>>,
+    difficulty:string
 }
 
 const TypingBox: React.FC<TypingBoxProps> = ({
@@ -23,7 +39,10 @@ const TypingBox: React.FC<TypingBoxProps> = ({
   handleClick,
   timeLeft,
   timeDropDownVisible,
-  setSelectTime
+  setSelectTime,
+  selectTime,
+  setDifficulty,
+  difficulty
 
 }) => {
   const soundRef = useRef(new Audio(clickSound));
@@ -38,53 +57,73 @@ const TypingBox: React.FC<TypingBoxProps> = ({
         .catch((err) => console.error("Sound Error:", err));
     }
   };
-  const handleTimeChange = (event: SelectChangeEvent<number>) => {
-    const selectedTime = Number(event.target.value);
+  const handleTimeChange = (event: string) => {
+    const selectedTime = Number(event);
     setSelectTime(selectedTime);
   };
 
   return (
-    <>
-    <div className="w-full md:w-1/4 flex justify-center items-center border-2 dark:border rounded-lg text-[#B0B0B0] font-medium">
+    <div className="p-4 flex flex-col justify-center items-center gap-4">
+
+<div className={`flex gap-4 ${textBlur ? "block" : "hidden"}`}>
+
+{/* <ToggleGroup type="single">
+      <ToggleGroupItem value="Easy" aria-label="Toggle Easy" onClick={() => setDifficulty("easy")} className={`${
+                difficulty === "easy" ? "bg-gray-600 text-white" : "bg-gray-300"
+              }`} >
+      Easy
+      </ToggleGroupItem>
+      <ToggleGroupItem value="Hard" aria-label="Toggle Hard" onClick={() => setDifficulty("hard")} className={`${
+                difficulty !== "easy" ? "bg-gray-600 text-white" : "bg-gray-300"
+              }`} >
+        Hard
+      </ToggleGroupItem >
+    </ToggleGroup> */}
+            <Button
+            variant={`${
+              difficulty === "easy" ? "default" : "secondary"
+            }`}
+              
+              onClick={() => setDifficulty("easy")}
+            >
+              Easy
+            </Button>
+            <Button
+              variant={`${
+                difficulty !== "easy" ? "default" : "secondary"
+              }`}
+              onClick={() => setDifficulty("hard")}
+            >
+              Hard
+            </Button>
+          </div>
+
+
+
+    <Progress value={((timeLeft / selectTime) * 100)} className="w-[80%]"/>
+
+    <div className="w-full md:w-1/4 ">
             {timeDropDownVisible ? (
-    
-            <FormControl fullWidth>
-              <Select
-                defaultValue={60}
-                onChange={handleTimeChange}
-                variant="outlined"
-                displayEmpty
-                sx={{
-                  maxHeight:"40px",
-                  backgroundColor: "none ", 
-                  color: "#B0B0B0",
-                  borderRadius: "8px",
-                  padding:'0px',
-                  fontWeight: "medium",
-                  "& .MuiOutlinedInput-notchedOutline": { border: "none" }, 
-                  "&:hover": {
-                    backgroundColor: "none", 
-                  },
-                  "&.Mui-focused": {
-                    backgroundColor: "none", 
-                  },
-                }}
-              >
-                <MenuItem value={15}>15s</MenuItem>
-                <MenuItem value={30}>30s</MenuItem>
-                <MenuItem value={60}>60s</MenuItem>
-              </Select>
-            </FormControl>
-            
+            <Select onValueChange={handleTimeChange}>
+            <SelectTrigger >
+              <SelectValue placeholder={selectTime} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={'15'}>15s</SelectItem>
+              <SelectItem value={'30'}>30s</SelectItem>
+              <SelectItem value={'60'}>60s</SelectItem>
+            </SelectContent>
+          </Select>
+          
             ) : (
-              <div className="p-2 ">Time: {timeLeft}s</div>
+              <div className="p-2 flex justify-center items-center border-2 dark:border rounded-lg text-[#B0B0B0] font-medium">Time: {timeLeft}s</div>
             )}
           </div>
       <input
         type="text"
         onKeyDown={handleKeyPress}
         ref={inputRef}
-        className="opacity-0 absolute left-[-100]"
+        className="opacity-0 h-0 w-0"
         value={typedText}
         onChange={(e) => setTypedText(e.target.value)}
         
@@ -113,7 +152,7 @@ const TypingBox: React.FC<TypingBoxProps> = ({
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
