@@ -126,7 +126,10 @@ const TypingBox: React.FC<TypingBoxProps> = ({
         className="opacity-0 h-0 w-0"
         value={typedText}
         onChange={(e) => setTypedText(e.target.value)}
-        
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck={false}
       />
 
       <div
@@ -139,7 +142,9 @@ const TypingBox: React.FC<TypingBoxProps> = ({
               key={i}
               className={`transition-all duration-200 ${
                 textBlur ? "blur-[4px]" : "blur-none"
-              } ${
+              } 
+          
+                ${
                 typedText[i] === char
                   ? "text-green-600"
                   : typedText[i] === undefined
