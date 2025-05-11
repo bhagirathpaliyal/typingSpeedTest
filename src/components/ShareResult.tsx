@@ -55,7 +55,7 @@ const ShareResult: React.FC<ShareResultProps> = ({ wpm, accuracy }) => {
     <div className={`flex flex-col w-[90%] ${wpm==0?'hidden':'block'} bg-white/20 dark:bg-black/30 backdrop-blur-md p-4 rounded-2xl shadow-lg mt-4`}>
         <div>
       
-      <div id="result-container" className="p-4 border rounded-lg  shadow-lg">
+      <div id="result-container" className="p-4 border rounded-lg  shadow-lg bg-white dark:bg-black/30">
         <h2 className="text-xl font-bold">Typing Test Result</h2>
         <p>🚀 Speed: {wpm} WPM</p>
         <p>🎯 Accuracy: {accuracy}%</p>
