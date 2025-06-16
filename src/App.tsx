@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { logPageView } from "./utils/analytics";
 import Header from "./components/Header";
 import TypingBox from "./components/TypingBox";
-// import ProgressBar from "./components/ProgressBar";
 import Stats from "./components/Stats";
 import RestartButton from "./components/RestartButton";
 import Footer from "./components/Footer";
@@ -172,10 +171,7 @@ const App = () => {
       <Header />
 
       <div className="flex flex-wrap w-[90%]  gap-6">
-        
-
         <div className="flex flex-col items-center flex-1 gap-4 p-2 bg-white/20 dark:bg-black/30 rounded-2xl shadow-lg">
-         
           <TypingBox
             text={text}
             textBlur={textBlur}
@@ -199,9 +195,8 @@ const App = () => {
             accuracy={accuracy}
           />
         </div>
-        
-          <LeaderBoard leaderboard={leaderboard} />
-   
+
+        <LeaderBoard leaderboard={leaderboard} />
       </div>
 
       <ShareResult wpm={wordsTyped} accuracy={accuracy} />
