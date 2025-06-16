@@ -116,7 +116,7 @@ const TypingBox: React.FC<TypingBoxProps> = ({
           {text.split("").map((char, i) => (
             <span
               key={i}
-              className={`transition-all duration-200 ${
+              className={`transition-all duration-500 animate-[fadeIn_0.5s_forwards] ${
                 textBlur ? "blur-[4px]" : "blur-none"
               } 
                 ${
